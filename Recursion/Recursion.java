@@ -450,5 +450,60 @@
 //     }
 // }
 
+
+//---------------------------------------------------------ADVANCED QUESTIONS ---------------------------------------------
+
 // -------------------------------------------------------------------------------------
-//print all permutations to a string 
+//print all permutations of a string
+
+// class Recursion{
+//     public static void printPermutation(String str , String permutation){
+//         if(str.length() == 0){
+//             System.out.println(permutation);
+//             return;
+//         }
+//     for(int i =0 ; i < str.length() ; i++){
+//         char currChar = str.charAt(i);
+//         String newStr = str.substring(0, i) + str.substring(i + 1);
+//         printPermutation(newStr, permutation + currChar);
+//     }
+//     }
+
+//     public static void main(String[] args) {
+//         Recursion.printPermutation("abc", "");
+//     }
+// }
+
+// -------------------------------------------------------------------------------------
+//Count total path in a maze to move from (0,0) to (n,m) //n=3 , m=3
+// it will start from (0,0) everytime and when it reaches (2,2) it will return 1
+
+class Recursion{
+ public static int totalPaths(int i , int j , int n , int m){
+    if(i == n || j == m){
+        return 0;
+    }
+
+    if(i == n-1 && j == m-1){
+    return 1;
+    }
+  
+  //downPaths  
+  int downPaths = totalPaths(i + 1, j, n, m);
+  
+  //rightPaths
+  int rightPaths = totalPaths(i, j+1, n, m);
+   
+  return downPaths + rightPaths;
+ }
+
+ public static void main(String[] args) {
+    int count = Recursion.totalPaths(0, 0, 3, 3);
+    System.out.println(count);
+ }
+}
+
+// -------------------------------------------------------------------------------------
+//
+
+
