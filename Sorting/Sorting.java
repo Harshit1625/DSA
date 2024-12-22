@@ -1,6 +1,6 @@
 
 // -------------------------------------------------------------------------------------------
-//BubbleSort
+// Bubble Sort: Repeatedly compares adjacent elements and swaps them if they are in the wrong order, "bubbling" the largest element to the end in each pass.
 
 // class Sorting{
 //     public static void main(String[] args) {
@@ -22,7 +22,7 @@
 // }
 
 // -------------------------------------------------------------------------------------------
-//SelectionSort
+// Selection Sort: Finds the smallest (or largest) element from the unsorted portion of the array and swaps it with the first unsorted element.
 
 // class Sorting{
 //     public static void main(String[] args) {
@@ -46,31 +46,93 @@
 // }
 
 // -------------------------------------------------------------------------------------------
+// Insertion Sort: Builds the sorted portion of the array one element at a time by picking the next element and inserting it into its correct position.
 
-//InsertionSort
-
-class Sorting{
-    public static void main(String[] args) {
-        int arr[] = {7, 8 , 3, 1 ,2};
-        for(int i = 0 ; i < arr.length ; i++){
-            int current = arr[i];
-            int j = i -1;
-            while(j>=0 && current < arr[j]){
-                arr[j+1] = arr[j];
-                j--;
-            }
-            arr[j+1] = current;
-        }    
- }
-}
+// class Sorting{
+//     public static void main(String[] args) {
+//         int arr[] = {7, 8 , 3, 1 ,2};
+//         for(int i = 0 ; i < arr.length ; i++){
+//             int current = arr[i];
+//             int j = i -1;
+//             while(j>=0 && current < arr[j]){
+//                 arr[j+1] = arr[j];
+//                 j--;
+//             }
+//             arr[j+1] = current;
+//         }    
+//  }
+// }
 
 // Explanation --------------------------------------
 
 // Consider the array {7, 8, 3, 1, 2} at some point in the sorting process.
-// Assume you are inserting current = 3 into the sorted portion {7, 8}:
+// Assume you are inserting current = 3 into the sorted portion {7, 8}.
 // First, 8 is shifted one position to the right: the array becomes {7, 8, 8, 1, 2}.
 // Then, 7 is shifted one position to the right: the array becomes {7, 7, 8, 1, 2}.
 // At this point, j = -1 (just before the start of the array).
 // The correct position for current = 3 is at arr[j + 1], which is arr[0]. The array becomes {3, 7, 8, 1, 2}.
 
 // -------------------------------------------------------------------------------------------
+//Merge Sort : Divides the array into halves, recursively sorts each half, and then merges the sorted halves back together.
+// Done by Divide And Conquer technique
+
+class Sorting{
+    public static void conquer(int arr[] , int startIdx , int endIdx , int mid){
+     int merged[] = new int[endIdx - startIdx + 1];   
+     int idx1 = startIdx;
+     int idx2 = mid + 1;
+     int x = 0;
+
+     while(idx1 <= mid && idx2 <= endIdx){
+        if(arr[idx1] <= arr[idx2]){
+            merged[x++] = arr[idx1++];
+        }else{
+            merged[x++] = arr[idx2++];
+        }
+     }
+
+     //suppose we ran out of elements in any one array then we can directly copy the elements present in another array coz they are sorted already
+     while(idx1 <= mid){
+        merged[x++] = arr[idx1++];
+     }
+     while(idx2 <= endIdx){
+        merged[x++] = arr[idx2++];
+     }
+
+     //as conquering is not done in one step , it is done in multiple steps so at every step we must copy the element to the og array , and for correct positioning we must 
+     //start arr with startIdx; 
+     for(int i = 0 , j = startIdx; i < merged.length ; i++ , j++ ){
+        arr[j] = merged[i];
+     }
+   
+    }
+
+    public static void divide(int arr[] , int startIdx , int endIdx){
+        if(startIdx >= endIdx){
+            return;
+        }
+        int mid = startIdx + (endIdx - startIdx)/2;
+        divide(arr, startIdx, mid);
+        divide(arr, mid + 1, endIdx);
+        conquer(arr, startIdx, endIdx, mid);
+    }
+    public static void main(String[] args) {
+        int arr[] = {12 , 15 , 7 , 8 , 2 , 9};
+        divide(arr, 0, arr.length-1);
+
+          
+     for(int i = 0 ; i < arr.length ; i++){
+        System.out.print(arr[i] + " ");
+     }
+    }
+}
+
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------------
+//Quick Sort : Selects a "pivot" element, partitions the array into elements less than and greater than the pivot, and recursively sorts the partitions.
+
