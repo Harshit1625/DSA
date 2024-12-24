@@ -128,10 +128,45 @@
 // }
 
 // -------------------------------------------------------------------------------------------
-//Quick Sort : Selects a "pivot" element, partitions the array into elements less than and greater than the pivot, and recursively sorts the partitions.
+//Quick Sort : Selects a "pivot" element (mostly last element), partitions the array into elements less than and greater than the pivot, and recursively sorts the partitions.
 
 class Sorting{
-    
+
+    public int partition(int arr[] , int lowIdx , int highIdx){
+      int pivot = arr[highIdx];
+      int i = lowIdx - 1; //i is the index we will use to traverse through array
+
+      for(int j=lowIdx ; j <highIdx ; j++){
+        if(arr[j] < pivot){
+            i++;
+            int temp = arr[i];
+            arr[i] =  arr[j];
+            arr[j] = temp;
+        }
+      }
+      i++;
+      int temp = arr[highIdx];
+      arr[highIdx] = arr[i];
+      arr[i] = temp;
+      return i;
+    }
+
+    public void quickSort(int arr[] , int lowIdx , int highIdx){
+      if(lowIdx < highIdx){
+        int pivotIdx = partition(arr, lowIdx , highIdx);
+        quickSort(arr, lowIdx, pivotIdx - 1);
+        quickSort(arr, pivotIdx + 1, highIdx);
+      }
+    }
+    public static void main(String[] args) {
+        Sorting sc = new Sorting();
+        int arr[] = {6 , 3, 9 , 5 , 2 ,8};
+        sc.quickSort(arr, 0, arr.length - 1);
+
+        for(int i=0; i<arr.length; i++){
+            System.out.print(arr[i] + " ");
+        }
+    }
 }
 
 
