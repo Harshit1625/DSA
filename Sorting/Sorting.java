@@ -78,7 +78,7 @@
 
 // class Sorting{
 //     public static void conquer(int arr[] , int startIdx , int endIdx , int mid){
-//      int merged[] = new int[endIdx - startIdx + 1];   
+//      int merged[] = new int[endIdx - startIdx + 1];  // we aint putting arr.length as size because we have to merge subarray not an entire array 
 //      int idx1 = startIdx;
 //      int idx2 = mid + 1;
 //      int x = 0;
@@ -104,7 +104,6 @@
 //      for(int i = 0 , j = startIdx; i < merged.length ; i++ , j++ ){
 //         arr[j] = merged[i];
 //      }
-   
 //     }
 
 //     public static void divide(int arr[] , int startIdx , int endIdx){
@@ -144,6 +143,7 @@ class Sorting{
             arr[j] = temp;
         }
       }
+      //now we have to swap pivot
       i++;
       int temp = arr[highIdx];
       arr[highIdx] = arr[i];
@@ -160,7 +160,7 @@ class Sorting{
     }
     public static void main(String[] args) {
         Sorting sc = new Sorting();
-        int arr[] = {6 , 3, 9 , 5 , 2 ,8};
+        int arr[] = {6 , 3, 9 ,10 ,  5 , 2 ,8};
         sc.quickSort(arr, 0, arr.length - 1);
 
         for(int i=0; i<arr.length; i++){
