@@ -3,6 +3,7 @@ package Linked_List;
 
 //--------------------------------------------------------------------------------------
 //Question : How to reverse a linked list? (constraint : no extra memory should be used)
+
 public class ReverseList {
     // declaring head
     Node head;
@@ -110,20 +111,21 @@ public class ReverseList {
         return size;
     }
 
-    //reversing the list 
+    //fn to reversing the list (iterativeApproach)
     public void reverseIterate(){
         if(head == null || head.next == null){
             return;
         }
         Node prevNode = head;
         Node currNode = head.next;
-        //nextNode must be initialized inside
+        //nextNode must be initialized inside because it must be changed on every iteration 
         Node nextNode;
         while(currNode != null){
+            //connecting the node 
             nextNode = currNode.next;
-            currNode.next = prevNode;
 
             //update
+            currNode.next = prevNode;
             prevNode = currNode;
             currNode = nextNode;
         }
@@ -131,7 +133,36 @@ public class ReverseList {
         head = prevNode;
     }
 
+    //fn to reversing the list (recursive approach)
+    public Node reverseRecursive(Node head){
+        if(head == null || head.next == null){
+            return head;
+        }
+        Node newHead = reverseRecursive(head.next);
+        head.next.next = head;
+        head.next = null;
+         
+        return newHead;
+    }
 
+
+//Iterative approach
+//     public static void main(String[] args) {
+//         ReverseList ll = new ReverseList();
+//         ll.addFirst("3");
+//         ll.addFirst("4");
+//         ll.addFirst("6");
+//         ll.addLast("8");
+//         ll.printList();
+
+//         ll.reverseIterate();
+//        ll.printList();
+
+
+// }
+
+//-----------------------------------------------------------------------------------------------
+//Recursive approachg
 
     public static void main(String[] args) {
         ReverseList ll = new ReverseList();
@@ -141,9 +172,9 @@ public class ReverseList {
         ll.addLast("8");
         ll.printList();
 
-        ll.reverseIterate();
+       ll.head = ll.reverseRecursive(ll.head);
        ll.printList();
-
-
 }
 }
+
+
