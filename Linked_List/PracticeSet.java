@@ -116,77 +116,181 @@ package Linked_List;
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
 //Q2 :- Check if the Linked list is palindrome or not?
-class PracticeSet {
-        ListNode head;
+// class PracticeSet {
+//         ListNode head;
     
-        class ListNode {
-            int val; // val means data which we are passing
-            ListNode next;
+//         class ListNode {
+//             int val; // val means data which we are passing
+//             ListNode next;
     
-            ListNode(int val) {
-                this.val = val;
-            }
+//             ListNode(int val) {
+//                 this.val = val;
+//             }
     
-            ListNode(int val, ListNode next) {
-                this.val = val;
-                this.next = next;
-            }
-        }
+//             ListNode(int val, ListNode next) {
+//                 this.val = val;
+//                 this.next = next;
+//             }
+//         }
         //function to find middleNode
         //:- we can find the middleNode by two approaches , first is we can calculate the size of the list amd then divide it by two ,the second approach is turtle-hare approach
         //:- turtle and hare are basically two pointers in which hare jumps 2 steps but tutrtle jumps for 1 step , and when hares next step becomes equal to null we return the 
         //   turtle position and that will be the middle pf the list.(they must start alongside from the head)
-        public ListNode middleNodeFinder(ListNode head){
-            ListNode hare = head;
-            ListNode turtle = head;
+//         public ListNode middleNodeFinder(ListNode head){
+//             ListNode hare = head;
+//             ListNode turtle = head;
 
-            while(hare.next != null && hare.next.next !=null){
-                hare = hare.next.next;
-                turtle = turtle.next;
+//             while(hare.next != null && hare.next.next !=null){
+//                 hare = hare.next.next;
+//                 turtle = turtle.next;
+//             }
+//             return turtle;
+//         }
+
+//         //function to reversetheSecondHalf
+//         public ListNode reverseSecondHalf(ListNode head){
+//             ListNode prevNode = null;
+//             ListNode currNode = head;
+//             ListNode nextNode;
+
+//             while(currNode != null){
+//               nextNode = currNode.next;
+
+//               //updation
+//               currNode.next = prevNode;
+//               prevNode = currNode;
+//               currNode = nextNode;
+//             }
+//             return prevNode;
+//         }
+
+//         //function to check LL if is palindrome or not
+//         public boolean isPalindrome(ListNode head){
+//          if(head == null || head.next == null){
+//             return true;
+//          }   
+
+//          ListNode middleNode = middleNodeFinder(head);
+//          ListNode secondHalfStart = reverseSecondHalf(middleNode.next);
+//          ListNode firstHalfStart = head;
+//          while(secondHalfStart != null){
+//             if(firstHalfStart.val != secondHalfStart.val){
+//                 return false;
+//             }
+//            firstHalfStart = firstHalfStart.next;
+//            secondHalfStart = secondHalfStart.next;
+//          }
+
+//          return true;
+//         }
+
+
+//      //  Helper method to add nodes to the list from the last
+//     public void addNode(int data){
+//         ListNode newNode = new ListNode(data);
+//         if(head == null){
+//           head = newNode;
+//           return;
+//         }
+        
+//         ListNode currNode = head;
+//         while(currNode.next !=null){
+//            currNode = currNode.next;
+//         }
+//         currNode.next = newNode;
+//     }
+
+//     // Helper method to display the list
+//     public void display() {
+//         ListNode temp = head;
+//         while (temp != null) {
+//             System.out.print(temp.val + " -> ");
+//             temp = temp.next;
+//         }
+//         System.out.println("null");
+//     }
+
+//     public static void main(String[] args) {
+//         PracticeSet list = new PracticeSet();
+
+//         // Adding nodes to the list
+//         list.addNode(1);
+//         list.addNode(2);
+//         list.addNode(3);
+//         list.addNode(2);
+//         list.addNode(1);
+        
+//         System.out.println("Original List:");
+//         list.display();
+//        boolean result = list.isPalindrome(list.head);
+//        System.out.println(result);
+//     }
+
+// }
+
+//Note :- Hare Turtle approach is also known as Floyd's algorithm.
+//------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
+//Q3 :- Detect a cycle in a linked list ( means last node is pointing towards any other node not null) + how we can remove it
+//watch anuj bhaiya's video for this
+
+class PracticeSet {
+    ListNode head;
+
+    class ListNode {
+        int val; // val means data which we are passing
+        ListNode next;
+
+        ListNode(int val) {
+            this.val = val;
+            this.next = null;
+        }
+    }
+
+    // Function to check if a cycle is present and return the meeting node
+    public ListNode hasCycle(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode hare = head;
+        ListNode turtle = head;
+
+        while (hare != null && hare.next != null) {
+            hare = hare.next.next;
+            turtle = turtle.next;
+            if (hare == turtle) {
+                return hare; // Return the meeting point
             }
-            return turtle;
+        }
+        return null; // No cycle detected
+    }
+
+    // Function to detect the start of the cycle and remove it
+    public ListNode detectStartCycleNodeAndRemove(ListNode head) {
+        ListNode meetingNode = hasCycle(head);
+        if (meetingNode == null) {
+            return null; // No cycle detected
         }
 
-        //function to reversetheSecondHalf
-        public ListNode reverseSecondHalf(ListNode head){
-            ListNode prevNode = null;
-            ListNode currNode = head;
-            ListNode nextNode;
-
-            while(currNode != null){
-              nextNode = currNode.next;
-
-              //updation
-              currNode.next = prevNode;
-              prevNode = currNode;
-              currNode = nextNode;
-            }
-            return prevNode;
+        // Find the start of the cycle
+        ListNode currNode = head;
+        while (currNode != meetingNode) {
+            currNode = currNode.next;
+            meetingNode = meetingNode.next;
         }
 
-        //function to check LL if is palindrome or not
-        public boolean isPalindrome(ListNode head){
-         if(head == null || head.next == null){
-            return true;
-         }   
-
-         ListNode middleNode = middleNodeFinder(head);
-         ListNode secondHalfStart = reverseSecondHalf(middleNode.next);
-         ListNode firstHalfStart = head;
-         while(secondHalfStart != null){
-            if(firstHalfStart.val != secondHalfStart.val){
-                return false;
-            }
-           firstHalfStart = firstHalfStart.next;
-           secondHalfStart = secondHalfStart.next;
-         }
-
-         return true;
+        // Remove the cycle
+        ListNode temp = currNode;
+        while (temp.next != currNode) {
+            temp = temp.next;
         }
+        temp.next = null; // Break the cycle
 
+        return currNode; // Return the start of the cycle
+    }
 
-     //  Helper method to add nodes to the list from the last
-    public void addNode(int data){
+     // Helper method to add nodes to the list from the last
+     public void addNode(int data){
         ListNode newNode = new ListNode(data);
         if(head == null){
           head = newNode;
@@ -222,16 +326,12 @@ class PracticeSet {
         
         System.out.println("Original List:");
         list.display();
-       boolean result = list.isPalindrome(list.head);
-       System.out.println(result);
+       
     }
-
 }
 
 
-//------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------
-//Q3 :- 
+
 
 
 
