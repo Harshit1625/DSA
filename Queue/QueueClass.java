@@ -232,5 +232,23 @@
 // }
 //-----------------------------------------------------------------------------------------------
 //Queue Implementation using Collection Framework
+// import java.util.*;
+
+// class QueueClass{
+//     public static void main(String[] args) {
+//         //why linkedList is here? coz Queue is interface in java ; we can implement it using LinkedList and ArrayDeque;
+//         Queue<Integer> q = new LinkedList<>();
+//         Queue<Integer> q = new ArrayDeque<>();
+//         q.add(1);
+//         q.add(2);
+//         q.add(3);
+//         q.add(4);
+
+//         while(!q.isEmpty()){
+//             System.out.println(q.peek());
+//             q.remove();
+//         }
+//     }
+// }
 
 
