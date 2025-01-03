@@ -18,7 +18,6 @@ import java.util.*;
 //             this.data = data;
 //             next = null;
 //         }
-
 //     }
 
 //     //declaring the stack class
@@ -44,7 +43,7 @@ import java.util.*;
 //        head = newNode;
 //      }
 
-//      //function to pop the data
+//   function to pop the data
 //      public static int pop(){
 //         if(isEmpty()){
 //             return -1;
