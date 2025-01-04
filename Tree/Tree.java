@@ -6,6 +6,8 @@
 
 package Tree;
 
+import java.util.*;
+
 public class Tree {
     static class Node {
         int data;
@@ -55,7 +57,7 @@ public class Tree {
     }
 
     // --------------------------------------------------------------
-    // Order Traversal :-
+    // inOrder Traversal :-
     // 1) Left SubTree
     // 2) Root
     // 3) Right SubTree
@@ -95,17 +97,72 @@ public class Tree {
     // ----------------------------------------------------------------------------------
 
     public static void levelOrder(Node root) {
+        if (root == null) {
+            return;
+        }
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+
+        while (!q.isEmpty()) {
+            Node currNode = q.remove();
+            if (currNode == null) {
+                System.out.println();
+                if (q.isEmpty()) {
+                    break;
+                } else {
+                    q.add(null);
+                }
+            } else {
+                System.out.print(currNode.data + " ");
+                if (currNode.left != null) {
+                    q.add(currNode.left);
+                }
+                if (currNode.right != null) {
+                    q.add(currNode.right);
+                }
+            }
+        }
 
     }
+
+    // --------------------------------------------------------------
+    // Counting Nodes of a Binary TREE :-
+    public static int countNodes(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftNodes = countNodes(root.left); //leftNodes is for traversing through the left nodes and returning 1 for a single node similarly rightNodes for right ones
+        int rightNodes = countNodes(root.right);
+
+        return leftNodes + rightNodes + 1;
+    }
+
+    
+    // --------------------------------------------------------------
+    // Sum of Nodes:-
+    public static int sumOFNodes(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftSum = sumOFNodes(root.left); //leftNodes is for traversing through the left nodes and returning the data for a single node similarly rightNodes for right ones
+        int rightSum = sumOFNodes(root.right);
+
+        return leftSum + rightSum + root.data;
+    }
+
 
     public static void main(String[] args) {
         int nodes[] = { 1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1 };
         BinaryTree bt = new BinaryTree();
         Node rootNode = bt.buildTree(nodes);
-        preOrder(rootNode);
-        System.out.println();
-        inOrder(rootNode);
-        System.out.println();
-        postOrder(rootNode);
+        // preOrder(rootNode);
+        // System.out.println();
+        // inOrder(rootNode);
+        // System.out.println();
+        // postOrder(rootNode);
+        // System.out.println();
+        // levelOrder(rootNode);
+        System.out.println("Total Nodes :- " + countNodes(rootNode));
     }
 }
