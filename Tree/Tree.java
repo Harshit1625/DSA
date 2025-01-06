@@ -168,57 +168,103 @@ public class Tree {
     }
 
     // --------------------------------------------------------------
-    // Diameter Of Nodes(Number of nodes in the longest path between any two nodes)(Complexity:-O(n*n):-
+    // Diameter Of Nodes(Number of nodes in the longest path between any two
+    // nodes)(Complexity:-O(n*n):-
     public static int diameterOfNodes(Node root) {
         if (root == null) {
             return 0;
         }
-        int diam1 = diameterOfNodes(root.left); //calculating the diamter in the left subtree
-        int diam2 = diameterOfNodes(root.right); //calculating the diamter in the right subtree
-        int diam3 = heightOfTree(root.left) + heightOfTree(root.right) + 1; //calculating the height in LST and also in RST plus including the root node(which is 1)
+        int diam1 = diameterOfNodes(root.left); // calculating the diamter in the left subtree
+        int diam2 = diameterOfNodes(root.right); // calculating the diamter in the right subtree
+        int diam3 = heightOfTree(root.left) + heightOfTree(root.right) + 1; // calculating the height in LST and also in
+                                                                            // RST plus including the root node(which is
+                                                                            // 1)
 
-        return Math.max(diam3 , Math.max(diam1, diam2));
+        return Math.max(diam3, Math.max(diam1, diam2));
     }
+
     // --------------------------------------------------------------
-    // Diameter Of Nodes(Number of nodes in the longest path between any two nodes)(Complexity :O(n)):-
+    // Diameter Of Nodes(Number of nodes in the longest path between any two
+    // nodes)(Complexity :O(n)):-
     // Optimal Solution
-    static class TreeInfo{
+    static class TreeInfo {
         int height;
         int diameter;
 
-        TreeInfo(int height , int diameter){
-        this.height = height;
-        this.diameter = diameter;
+        TreeInfo(int height, int diameter) {
+            this.height = height;
+            this.diameter = diameter;
         }
     }
 
-     public static TreeInfo diameterOfNodes2(Node root){
-        if(root == null){
+    public static TreeInfo diameterOfNodes2(Node root) {
+        if (root == null) {
             return new TreeInfo(0, 0);
         }
         TreeInfo left = diameterOfNodes2(root.left);
         TreeInfo right = diameterOfNodes2(root.right);
 
-        int myHeight = Math.max(left.height , right.height) + 1;
+        int myHeight = Math.max(left.height, right.height) + 1;
 
         int diam1 = left.diameter;
         int diam2 = right.diameter;
         int diam3 = left.height + right.height + 1;
 
-        int myDiameter = Math.max(Math.max(diam1 , diam2), diam3);
+        int myDiameter = Math.max(Math.max(diam1, diam2), diam3);
 
         TreeInfo info = new TreeInfo(myHeight, myDiameter);
         return info;
-     } 
+    }
 
-     //------------------------------------------------------------------
-     //Check a subtree is part of another tree or not (asked by FAAANG)
-     public static boolean subtreeOfAnotherSubtreeOrNot(Node root){
-       
-     }
-     
-     //------------------------------------------------------------------
-     public static void main(String[] args) {
+    // ------------------------------------------------------------------
+    // Check a subtree is part of another tree or not (asked by FAAANG)
+
+    // isIdentical is called to check if two trees are identical when the root node
+    // matches with subRoot's root
+    public static boolean isIdentical(Node root, Node subRoot) {
+        // If both root and subRoot are null, the trees are identical
+        if (root == null && subRoot == null) {
+            return true;
+        }
+        // If either root or subRoot is null (but not both), the trees are not identical
+        if (root == null || subRoot == null) {
+            return false;
+        }
+        // Check if the current nodes match and if the left and right subtrees are
+        // identical
+        if (root.data == subRoot.data) {
+            return isIdentical(root.left, subRoot.left) && isIdentical(root.right, subRoot.right);
+        }
+        // If the current nodes do not match, the trees are not identical
+        return false;
+    }
+
+    // Function to determine if subRoot is a subtree of the given tree rooted at
+    // root
+    public static boolean subtreeOfAnotherSubtreeOrNot(Node root, Node subRoot) {
+        // If subRoot is null, it is always a subtree (an empty tree is a subtree of any
+        // tree)
+        if (subRoot == null) {
+            return true;
+        }
+        // If root is null and subRoot is not null, subRoot cannot be a subtree
+        if (root == null) {
+            return false;
+        }
+        // If the current nodes of root and subRoot match, check if the trees rooted at
+        // these nodes are identical
+        if (root.data == subRoot.data) {
+            // Use isIdentical to verify if the subtree rooted at root matches subRoot
+            if (isIdentical(root, subRoot)) {
+                return true;
+            }
+        }
+        // Recursively check the left and right subtrees of root for subRoot
+        return subtreeOfAnotherSubtreeOrNot(root.left, subRoot) || subtreeOfAnotherSubtreeOrNot(root.right, subRoot);
+    }
+
+    // ------------------------------------------------------------------
+    public static void main(String[] args) {
         int nodes[] = { 1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1 };
         BinaryTree bt = new BinaryTree();
         Node rootNode = bt.buildTree(nodes);
@@ -232,7 +278,27 @@ public class Tree {
         // System.out.println("Total Nodes :- " + countNodes(rootNode));
         // System.out.println();
         // System.out.println("Height :- " + heightOfTree(rootNode));
-        System.out.println(diameterOfNodes2(rootNode).diameter);
-        System.out.println(diameterOfNodes2(rootNode).height);
+        // System.out.println(diameterOfNodes2(rootNode).diameter);
+        // System.out.println(diameterOfNodes2(rootNode).height);
+
+        // SUBTREE QUESTION(Here we didnt use buildTree to build the tree)
+        // Root Tree
+        Node root = new Node(3);
+        root.left = new Node(4);
+        root.right = new Node(5);
+        root.left.left = new Node(1);
+        root.left.right = new Node(2);
+        root.left.right.left = new Node(0);
+
+        // SubRoot Tree
+        Node subRoot = new Node(4);
+        subRoot.left = new Node(1);
+        subRoot.right = new Node(2);
+        subRoot.right.left = new Node(0);
+
+        // Check if subRoot is a subtree of root
+        boolean result = subtreeOfAnotherSubtreeOrNot(root, subRoot);
+        System.out.println("Is subRoot a subtree of root? " + result);
+
     }
 }
