@@ -24,7 +24,6 @@ public class BST {
     }
 
     // -----------------------------------------------------------------
-
     // function to build BST
     public static Node insert(Node root, int data) {
         if (root == null) {
@@ -71,6 +70,70 @@ public class BST {
     }
 
     // -----------------------------------------------------------------
+    // function to Delete a node in a BST
+    // there will be three cases :-
+    // 1) No Child : Delete node and return to parent
+    // 2) One child : Delete node and replace with child node
+    // 3) Two Child : Replace value with inorder successor and Delete the node for
+    // inorder successor(LEFT MOST NODE IN THE RIGHT SUBTREE)
+    // -----------------------------------------------------------------
+    public static Node deleteNode(Node root, int data) {
+        // 82 to 85 is for searching the node
+        if (root.data > data) {
+            root.left = deleteNode(root.left, data);
+        } else if (root.data < data) {
+            root.right = deleteNode(root.right, data);
+        } else {
+            // root.data == data
+            // case 1
+            if (root.left == null && root.right == null) {
+                return null;
+            }
+            // case 2
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+            // case 3
+            Node IS = inOrderSuccessor(root.right);
+            root.data = IS.data;
+            root.right = deleteNode(root.right, IS.data);
+        }
+        return root;
+    }
+
+    // function to get the inOrder Successor
+    public static Node inOrderSuccessor(Node root) {
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root;
+    }
+
+    // -----------------------------------------------------------------
+    // function to print in range in a BST
+    public static void printInRange(Node root, int X, int Y) {
+        if (root == null) {
+            return;
+        }
+        if (root.data >= X && root.data <= Y) {
+            printInRange(root.left, X, Y);
+            System.out.print(root.data + " ");
+            printInRange(root.right, X, Y);
+        } else if (root.data >= Y) {
+            printInRange(root.left, X, Y);
+        } else {
+            printInRange(root.right, X, Y);
+        }
+    }
+
+    // -----------------------------------------------------------------
+    // function to get all the paths from root to leaf
+     public static void pathCalculate(Node root){
+        
+     }
+    // -----------------------------------------------------------------
     public static void main(String[] args) {
         int nodes[] = { 5, 1, 3, 4, 2, 7 };
         Node rootNode = null;
@@ -78,6 +141,8 @@ public class BST {
             rootNode = insert(rootNode, nodes[i]);
         }
         inOrder(rootNode);
-        System.out.println(searchBST(rootNode, 6));
+        System.out.println();
+        // System.out.println(searchBST(rootNode, 6));
+        printInRange(rootNode, 3 , 8);
     }
 }
