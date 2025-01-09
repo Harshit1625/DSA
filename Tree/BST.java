@@ -1,5 +1,6 @@
 package Tree;
 
+import java.util.ArrayList;
 //--------------------------------------------------------------------
 //Binary Tree has complexity of O(N) whereas Binary Search Tree has a complexity of O(H); N means Nodes , H means Height of the tree
 //in average cases H<N ;means (logn)
@@ -129,20 +130,43 @@ public class BST {
     }
 
     // -----------------------------------------------------------------
+    // function the print the path
+    public static void printPath(ArrayList<Integer> path) {
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i) + " -> ");
+        }
+        System.out.println();
+    }
+
     // function to get all the paths from root to leaf
-     public static void pathCalculate(Node root){
-        
-     }
+    public static void pathCalculate(Node root, ArrayList<Integer> path) {
+        if (root == null) {
+            return;
+        }
+
+        path.add(root.data);
+
+        if (root.left == null && root.right == null) {
+            printPath(path);
+        } else {
+            pathCalculate(root.left, path);
+            pathCalculate(root.right, path);
+        }
+        path.remove(path.size() - 1);
+    }
+
     // -----------------------------------------------------------------
     public static void main(String[] args) {
-        int nodes[] = { 5, 1, 3, 4, 2, 7 };
+        int nodes[] = { 8, 5, 3, 1, 4, 6, 10, 11, 14 };
+        ArrayList<Integer> path = new ArrayList<>();
         Node rootNode = null;
         for (int i = 0; i < nodes.length; i++) {
             rootNode = insert(rootNode, nodes[i]);
         }
-        inOrder(rootNode);
-        System.out.println();
+        // inOrder(rootNode);
+        // System.out.println();
         // System.out.println(searchBST(rootNode, 6));
-        printInRange(rootNode, 3 , 8);
+        // printInRange(rootNode, 3, 8);
+        pathCalculate(rootNode, new ArrayList<>());
     }
 }
