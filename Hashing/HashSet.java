@@ -1,4 +1,5 @@
 package Hashing;
+import java.util.*;
 
 public class HashSet {
     public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class HashSet {
         // System.out.println(hs);
 
         // Iterator
-        java.util.Iterator it = hs.iterator(); // .iterator fn returns an iterator
+        Iterator it = hs.iterator(); // .iterator fn returns an iterator
 
         // Iterator has mainly two function :- next() , hasNext()
         // next() (initially it will point to null)
