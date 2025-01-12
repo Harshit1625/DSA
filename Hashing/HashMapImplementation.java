@@ -77,6 +77,7 @@ public class HashMapImplementation {
                 buckets[i] = new LinkedList<>();
             }
 
+            // fetching the elements from the old bucket and inserting it in the new bucket
             for (int i = 0; i < oldBucket.length; i++) {
                 LinkedList<Node> ll = oldBucket[i];
                 for (int j = 0; j < ll.size(); j++) {
