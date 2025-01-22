@@ -1,11 +1,9 @@
 package Trie;
 
-// also known as prefix tree , digital tree or retrival tree
-//used to retrieve data from a string or something else
-//its root node is an empty node
-//prefix is not repeated
-
-public class TrieDS {
+// -----------------------------------------------------------------
+// Word Break Problem
+//Given an input string and a dictionary of words , find out if the input string can be broken into a space separated sequence of dictionary words
+public class Practice {
     static class Node {
         Node[] children;
         boolean endOfWord;
@@ -58,8 +56,5 @@ public class TrieDS {
         for (int i = 0; i < words.length; i++) {
             insert(words[i]);
         }
-
-        System.out.println(Search("their"));
-        System.out.println(Search("thor"));
     }
 }
